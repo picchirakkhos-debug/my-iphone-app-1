@@ -1,24 +1,141 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My PWA App</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e8efe8">
+  <title>Little by Little</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>My iPhone App</h1>
-    <p>Installed from GitHub Pages.</p>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">YOUR PERSONAL FITNESS JOURNAL</div>
+        <h1>Little by Little<span class="brand-dot">.</span></h1>
+      </div>
+      <button id="settingsBtn" class="icon-btn" aria-label="Open settings" title="Settings">⚙</button>
+    </header>
 
-    <input id="note" placeholder="Write something...">
-    <button onclick="saveNote()">Save</button>
+    <section class="card cardio-card">
+      <div class="card-head">
+        <div>
+          <p class="eyebrow" id="summaryPeriod">THIS WEEK</p>
+          <h2>Cardio minutes</h2>
+        </div>
+        <span class="soft-chip" id="rangeLabel">Saturday – Friday</span>
+      </div>
+      <div class="cardio-content">
+        <div class="ring-wrap" aria-label="Cardio summary ring">
+          <svg class="progress-ring" viewBox="0 0 180 180">
+            <circle class="ring-track" cx="90" cy="90" r="74"></circle>
+            <circle class="ring-fill" id="ringFill" cx="90" cy="90" r="74"></circle>
+          </svg>
+          <div class="ring-center">
+            <strong id="totalMinutes">0</strong>
+            <span>MINUTES</span>
+          </div>
+        </div>
+        <div class="cardio-stats">
+          <div class="stat-line"><span>Daily average</span><strong id="dailyAverage">0 min</strong></div>
+          <div class="stat-line"><span>Days logged</span><strong id="loggedDays">0 / 7</strong></div>
+          <p class="stat-note">Small steps add up. Keep showing up.</p>
+        </div>
+      </div>
+      <div class="cardio-entry">
+        <label for="cardioInput">Cardio for selected date <span id="cardioDateLabel">Today</span></label>
+        <div class="entry-row">
+          <input id="cardioInput" type="number" inputmode="numeric" min="0" step="1" placeholder="Minutes" aria-label="Cardio minutes">
+          <span class="unit">min</span>
+          <button id="saveCardioBtn" class="primary-btn">Save</button>
+        </div>
+        <p class="tiny-note" id="cardioSavedNote">Choose a date on the calendar to log cardio for that day.</p>
+      </div>
+    </section>
 
-    <h3>Saved Note</h3>
-    <p id="output"></p>
-  </div>
+    <section class="calendar-card card">
+      <div class="calendar-top">
+        <h2>Your calendar</h2>
+        <div class="view-switch" role="group" aria-label="Calendar view">
+          <button class="view-btn active" data-view="month">Month</button>
+          <button class="view-btn" data-view="week">Week</button>
+        </div>
+      </div>
+      <div class="calendar-nav">
+        <button id="prevBtn" class="icon-btn nav-btn" aria-label="Previous period">‹</button>
+        <h3 id="calendarTitle">Month Year</h3>
+        <button id="nextBtn" class="icon-btn nav-btn" aria-label="Next period">›</button>
+      </div>
+      <div class="weekdays" aria-hidden="true">
+        <span>Sat</span><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
+      </div>
+      <div id="calendarGrid" class="calendar-grid"></div>
+      <div class="calendar-legend"><span class="legend-swatch"></span> Workout logged <span class="legend-outline"></span> Selected date</div>
+    </section>
 
-  <script src="app.js"></script>
+    <footer class="footer-note">A little progress, every day.</footer>
+  </main>
+
+  <dialog id="workoutDialog" class="workout-dialog">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow">WORKOUT RECORD</p>
+          <h2 id="dialogDateTitle">Workout day</h2>
+        </div>
+        <button id="closeWorkoutBtn" class="icon-btn close-btn" aria-label="Close">×</button>
+      </div>
+      <div class="routine-switch">
+        <button data-routine="Day-1" class="routine-btn active">Day-1</button>
+        <button data-routine="Day-2" class="routine-btn">Day-2</button>
+      </div>
+      <div id="exerciseList" class="exercise-list"></div>
+      <label class="comment-label" for="workoutComment">A note for this day <span>optional</span></label>
+      <textarea id="workoutComment" rows="3" placeholder="How did your workout feel?"></textarea>
+      <div class="dialog-actions">
+        <button id="saveWorkoutBtn" class="primary-btn wide">Save workout</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="settingsDialog" class="settings-dialog">
+    <div class="dialog-inner">
+      <div class="dialog-header">
+        <div><p class="eyebrow">PERSONALIZE</p><h2>Settings</h2></div>
+        <button id="closeSettingsBtn" class="icon-btn close-btn" aria-label="Close">×</button>
+      </div>
+      <section class="settings-section">
+        <h3>Appearance</h3>
+        <label class="setting-row">Mode
+          <select id="themeSelect"><option value="light">Light</option><option value="dark">Dark</option></select>
+        </label>
+        <label class="setting-row">Interface color
+          <input type="color" id="accentColor" aria-label="Interface color">
+        </label>
+        <label class="setting-row">Workout date highlight
+          <input type="color" id="highlightColor" aria-label="Workout highlight color">
+        </label>
+        <label class="setting-row">Calendar view
+          <select id="settingsViewSelect"><option value="month">Monthly</option><option value="week">Weekly</option></select>
+        </label>
+      </section>
+      <section class="settings-section">
+        <h3>Manage exercises</h3>
+        <div class="exercise-manager">
+          <h4>Day-1</h4><ul id="day1Manager" class="manager-list"></ul>
+          <div class="add-exercise-row"><input id="newDay1Exercise" placeholder="Add Day-1 exercise"><button id="addDay1Btn" class="secondary-btn">Add</button></div>
+        </div>
+        <div class="exercise-manager">
+          <h4>Day-2</h4><ul id="day2Manager" class="manager-list"></ul>
+          <div class="add-exercise-row"><input id="newDay2Exercise" placeholder="Add Day-2 exercise"><button id="addDay2Btn" class="secondary-btn">Add</button></div>
+        </div>
+      </section>
+      <p class="settings-footnote">Your workouts, notes, cardio entries, and preferences are saved on this device.</p>
+    </div>
+  </dialog>
+  <script src="./app.js"></script>
 </body>
 </html>

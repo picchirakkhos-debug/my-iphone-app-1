@@ -1,28 +1,101 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  margin: 0;
-}
-
-.container {
-  max-width: 500px;
-  margin: 40px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,.1);
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-button {
-  background: #007AFF;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-}
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+:root{--accent:#9dbca5;--highlight:#b8d7bf;--bg:#f3f5f0;--surface:#fff;--surface2:#f5f7f3;--text:#29352d;--muted:#87918a;--line:#e5e9e3;--shadow:0 14px 40px rgba(55,78,61,.07);--radius:24px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;transition:background .25s,color .25s}
+body[data-theme="dark"]{--bg:#171d1a;--surface:#222b25;--surface2:#2b342e;--text:#e8eee8;--muted:#a0aaa2;--line:#39443c;--shadow:0 14px 40px rgba(0,0,0,.2)}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.app-shell{width:min(100%,540px);margin:0 auto;padding:26px 18px 38px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin:4px 2px 20px}
+.eyebrow{margin:0 0 6px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:1.5px}
+h1,h2,h3,h4,p{margin-top:0}
+h1{font-family:'Playfair Display',serif;font-weight:600;font-size:30px;letter-spacing:-.5px;margin:0}
+.brand-dot{color:var(--accent)}
+h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin:0}
+h3{font-size:15px;margin:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.cardio-card{padding:20px;margin-bottom:18px}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.soft-chip{background:var(--surface2);color:var(--muted);border-radius:30px;padding:8px 11px;font-size:11px;white-space:nowrap}
+.cardio-content{display:flex;align-items:center;gap:18px;padding:16px 0 18px}
+.ring-wrap{width:158px;height:158px;flex:0 0 158px;position:relative}
+.progress-ring{width:100%;height:100%;transform:rotate(-90deg)}
+.ring-track,.ring-fill{fill:none;stroke-width:12}
+.ring-track{stroke:var(--surface2)}
+.ring-fill{stroke:var(--accent);stroke-linecap:round;transition:stroke-dasharray .45s ease}
+.ring-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.ring-center strong{font-family:'Playfair Display',serif;font-size:37px;font-weight:600;line-height:1}
+.ring-center span{font-size:10px;color:var(--muted);letter-spacing:1.2px;margin-top:5px}
+.cardio-stats{flex:1;min-width:0}
+.stat-line{display:flex;justify-content:space-between;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding:10px 0;font-size:12px}
+.stat-line span{color:var(--muted)}
+.stat-line strong{font-size:14px}
+.stat-note{color:var(--muted);font-size:11px;line-height:1.45;margin:12px 0 0}
+.cardio-entry{background:var(--surface2);border-radius:18px;padding:14px}
+.cardio-entry label{display:block;font-size:12px;font-weight:600;margin-bottom:10px}
+.cardio-entry label span{color:var(--muted);font-weight:400;margin-left:4px}
+.entry-row{display:flex;align-items:center;gap:8px}
+.entry-row input{min-width:0;flex:1;width:100%;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none}
+.unit{font-size:12px;color:var(--muted);margin-left:-4px}
+.primary-btn{border:0;background:var(--accent);color:#23372a;font-weight:700;padding:12px 17px;border-radius:12px;transition:filter .15s,transform .15s}
+.primary-btn:active{transform:scale(.98);filter:brightness(.95)}
+.tiny-note{font-size:10px;color:var(--muted);margin:8px 0 0}
+.calendar-card{padding:18px 16px 15px}
+.calendar-top,.calendar-nav{display:flex;align-items:center;justify-content:space-between}
+.calendar-top{margin-bottom:18px}
+.view-switch{display:flex;background:var(--surface2);padding:3px;border-radius:12px}
+.view-btn{border:0;background:transparent;color:var(--muted);font-size:12px;padding:8px 13px;border-radius:9px}
+.view-btn.active{background:var(--surface);color:var(--text);box-shadow:0 2px 6px rgba(0,0,0,.06);font-weight:700}
+.calendar-nav{margin-bottom:14px}
+.calendar-nav h3{font-weight:600;font-size:14px}
+.icon-btn{border:1px solid var(--line);background:var(--surface);color:var(--text);width:40px;height:40px;border-radius:13px;display:grid;place-items:center;font-size:21px}
+.nav-btn{width:34px;height:34px;border-radius:11px;font-size:24px}
+.weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.weekdays{margin-bottom:8px}
+.weekdays span{text-align:center;font-size:10px;font-weight:600;color:var(--muted);padding:6px 0}
+.calendar-grid{row-gap:7px}
+.date-cell{border:1px solid transparent;min-height:42px;border-radius:13px;background:var(--surface2);color:var(--text);font-size:12px;display:flex;align-items:center;justify-content:center;position:relative;transition:background .18s,border .18s,transform .12s}
+.date-cell:active{transform:scale(.96)}
+.date-cell.outside-month{opacity:.35}
+.date-cell.workout-done{background:var(--highlight);color:#253b2c;font-weight:700}
+.date-cell.selected{border:2px solid var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 20%,transparent)}
+.date-cell.workout-done.selected{border-color:var(--text)}
+.calendar-grid.week-view .date-cell{min-height:64px;border-radius:16px;font-size:14px}
+.calendar-legend{display:flex;align-items:center;gap:7px;margin-top:15px;color:var(--muted);font-size:10px}
+.legend-swatch{width:12px;height:12px;background:var(--highlight);border-radius:4px}
+.legend-outline{width:12px;height:12px;border:2px solid var(--accent);border-radius:4px;margin-left:8px}
+.footer-note{text-align:center;color:var(--muted);font-family:'Playfair Display',serif;font-size:13px;margin-top:20px}
+dialog{border:0;padding:0;color:var(--text);background:var(--surface);max-width:calc(100% - 24px);box-shadow:0 20px 80px rgba(0,0,0,.22)}
+dialog::backdrop{background:rgba(22,30,24,.45);backdrop-filter:blur(3px)}
+.workout-dialog,.settings-dialog{width:min(510px,calc(100% - 22px));border-radius:26px;max-height:90vh;overflow:auto}
+.dialog-inner{padding:20px}
+.dialog-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}
+.dialog-header h2{font-size:24px}
+.close-btn{font-size:25px}
+.routine-switch{display:flex;gap:8px;margin-bottom:15px}
+.routine-btn{flex:1;padding:11px;border:1px solid var(--line);border-radius:13px;background:var(--surface2);color:var(--muted);font-weight:600}
+.routine-btn.active{background:var(--accent);border-color:var(--accent);color:#263a2b}
+.exercise-list{display:grid;gap:7px;max-height:42vh;overflow:auto;padding-right:2px}
+.exercise-row{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface2);border-radius:12px;font-size:14px}
+.exercise-row input{accent-color:var(--accent);width:18px;height:18px}
+.comment-label{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin:18px 0 8px}
+.comment-label span{color:var(--muted);font-weight:400}
+textarea{width:100%;resize:vertical;min-height:70px;border:1px solid var(--line);background:var(--surface2);color:var(--text);border-radius:14px;padding:12px;outline:none}
+.dialog-actions{margin-top:14px}
+.wide{width:100%}
+.settings-section{border-top:1px solid var(--line);padding:15px 0}
+.settings-section h3{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:11px}
+.setting-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;font-size:13px}
+select{background:var(--surface2);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:8px 10px}
+input[type=color]{width:48px;height:32px;border:0;padding:0;background:transparent}
+.exercise-manager{background:var(--surface2);border-radius:15px;padding:12px;margin:10px 0}
+.exercise-manager h4{font-size:12px;margin:0 0 9px}
+.manager-list{padding:0;margin:0;list-style:none;display:grid;gap:4px}
+.manager-list li{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;font-size:12px;border-bottom:1px solid var(--line)}
+.manager-list li:last-child{border-bottom:0}
+.delete-exercise{background:transparent;border:0;color:#c26f6f;font-size:20px;padding:0 6px}
+.add-exercise-row{display:flex;gap:6px;margin-top:9px}
+.add-exercise-row input{min-width:0;flex:1;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--surface);color:var(--text)}
+.secondary-btn{border:0;border-radius:10px;padding:9px 12px;background:var(--accent);color:#263a2b;font-weight:700}
+.settings-footnote{font-size:11px;color:var(--muted);line-height:1.5;margin:10px 0 0}
+@media(max-width:390px){.app-shell{padding:20px 12px}.cardio-card{padding:16px}.ring-wrap{width:132px;height:132px;flex-basis:132px}.ring-center strong{font-size:31px}.cardio-content{gap:12px}.calendar-card{padding:15px 11px}.weekdays,.calendar-grid{gap:4px}.date-cell{min-height:38px;border-radius:11px}}
